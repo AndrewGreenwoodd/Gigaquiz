@@ -30,6 +30,7 @@ model Question {
   id         String   @id @default(cuid())
   text       String
   answer     String
+  options    String[]
   points     Int
   imageUrl   String?
   order      Int

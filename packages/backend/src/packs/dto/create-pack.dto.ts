@@ -4,6 +4,7 @@ import { IsString, IsBoolean, IsInt, IsOptional, IsArray, ValidateNested, Min } 
 export class CreateQuestionDto {
   @IsString() text: string;
   @IsString() answer: string;
+  @IsArray() @IsString({ each: true }) @IsOptional() options?: string[];
   @IsInt() @Min(0) points: number;
   @IsString() @IsOptional() imageUrl?: string;
   @IsInt() order: number;

@@ -125,14 +125,45 @@
 }
 
 .questionRow {
+  display: flex;
+  flex-direction: column;
+  gap: 6px;
+  border: 1px solid var(--border);
+  border-radius: 8px;
+  padding: 10px;
+  background: var(--surface2);
+}
+
+.questionTopRow {
   display: grid;
-  grid-template-columns: 1fr 1fr 80px auto;
-  gap: 8px;
+  grid-template-columns: 1fr 72px auto auto;
+  gap: 6px;
   align-items: center;
 }
 
+.questionAnswersRow {
+  display: grid;
+  grid-template-columns: 1fr 1fr 1fr 1fr;
+  gap: 6px;
+}
+
 .questionTextInput { composes: input; }
-.questionAnswerInput { composes: input; }
+
+.answerCorrect {
+  composes: input;
+  border-color: var(--success);
+  font-size: 13px;
+  padding: 7px 10px;
+}
+
+.answerCorrect:focus { border-color: var(--success); outline: none; }
+
+.answerWrong {
+  composes: input;
+  font-size: 13px;
+  padding: 7px 10px;
+  color: var(--text-muted);
+}
 
 .pointsInput {
   composes: input;

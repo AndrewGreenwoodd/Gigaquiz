@@ -3,10 +3,10 @@ import { useNavigate, useParams } from 'react-router-dom';
 import { api } from '../../lib/api';
 import styles from './PackBuilder.module.css';
 
-interface QDraft { text: string; answer: string; points: number; imageUrl: string; order: number; }
+interface QDraft { text: string; answer: string; options: string[]; points: number; imageUrl: string; order: number; }
 interface CatDraft { name: string; order: number; questions: QDraft[]; }
 
-function emptyQ(order: number): QDraft { return { text: '', answer: '', points: (order + 1) * 100, imageUrl: '', order }; }
+function emptyQ(order: number): QDraft { return { text: '', answer: '', options: ['', '', ''], points: (order + 1) * 100, imageUrl: '', order }; }
 function emptyCat(order: number): CatDraft { return { name: '', order, questions: [0,1,2,3,4].map(emptyQ) }; }
 
 export default function PackBuilder() {
@@ -38,6 +38,7 @@ export default function PackBuilder() {
         questions: cat.questions.map((q) => ({
           text: q.text,
           answer: q.answer,
+          options: q.options ?? ['', '', ''],
           points: q.points,
           imageUrl: q.imageUrl ?? '',
           order: q.order,
@@ -53,6 +54,18 @@ export default function PackBuilder() {
   function updateQuestion(catIdx: number, qIdx: number, key: keyof QDraft, value: unknown) {
     setCategories((prev) => prev.map((c, ci) =>
       ci === catIdx ? { ...c, questions: c.questions.map((q, qi) => qi === qIdx ? { ...q, [key]: value } : q) } : c
+    ));
+  }
+
+  function updateOption(catIdx: number, qIdx: number, optIdx: number, value: string) {
+    setCategories((prev) => prev.map((c, ci) =>
+      ci === catIdx ? {
+        ...c,
+        questions: c.questions.map((q, qi) => qi === qIdx ? {
+          ...q,
+          options: q.options.map((o, oi) => oi === optIdx ? value : o),
+        } : q),
+      } : c
     ));
   }
 
@@ -157,43 +170,56 @@ export default function PackBuilder() {
                 <div className={styles.questions}>
                   {cat.questions.map((q, qi) => (
                     <div key={qi} className={styles.questionRow}>
-                      <input
-                        className={styles.questionTextInput}
-                        placeholder="Question"
-                        value={q.text}
-                        onChange={(e) => updateQuestion(ci, qi, 'text', e.target.value)}
-                      />
-                      <input
-                        className={styles.questionAnswerInput}
-                        placeholder="Answer"
-                        value={q.answer}
-                        onChange={(e) => updateQuestion(ci, qi, 'answer', e.target.value)}
-                      />
-                      <input
-                        className={styles.pointsInput}
-                        type="number"
-                        placeholder="Pts"
-                        value={q.points}
-                        onChange={(e) => updateQuestion(ci, qi, 'points', Number(e.target.value))}
-                      />
-                      <div className={styles.imageUpload}>
-                        {q.imageUrl
-                          ? <img src={q.imageUrl} className={styles.imagePreview} alt="q img" onClick={() => updateQuestion(ci, qi, 'imageUrl', '')} />
-                          : (
-                            <>
-                              <input
-                                type="file"
-                                accept="image/*"
-                                style={{ display: 'none' }}
-                                ref={(el) => { fileInputs.current[`${ci}-${qi}`] = el; }}
-                                onChange={(e) => { const f = e.target.files?.[0]; if (f) handleImageUpload(ci, qi, f); }}
-                              />
-                              <button className={styles.imageBtn} onClick={() => fileInputs.current[`${ci}-${qi}`]?.click()}>+ img</button>
-                            </>
-                          )}
+                      <div className={styles.questionTopRow}>
+                        <input
+                          className={styles.questionTextInput}
+                          placeholder="Question"
+                          value={q.text}
+                          onChange={(e) => updateQuestion(ci, qi, 'text', e.target.value)}
+                        />
+                        <input
+                          className={styles.pointsInput}
+                          type="number"
+                          placeholder="Pts"
+                          value={q.points}
+                          onChange={(e) => updateQuestion(ci, qi, 'points', Number(e.target.value))}
+                        />
+                        <div className={styles.imageUpload}>
+                          {q.imageUrl
+                            ? <img src={q.imageUrl} className={styles.imagePreview} alt="q img" onClick={() => updateQuestion(ci, qi, 'imageUrl', '')} />
+                            : (
+                              <>
+                                <input
+                                  type="file"
+                                  accept="image/*"
+                                  style={{ display: 'none' }}
+                                  ref={(el) => { fileInputs.current[`${ci}-${qi}`] = el; }}
+                                  onChange={(e) => { const f = e.target.files?.[0]; if (f) handleImageUpload(ci, qi, f); }}
+                                />
+                                <button className={styles.imageBtn} onClick={() => fileInputs.current[`${ci}-${qi}`]?.click()}>+ img</button>
+                              </>
+                            )}
+                        </div>
                         {cat.questions.length > 1 && (
                           <button className={styles.removeBtn} style={{ fontSize: 11, padding: '3px 6px' }} onClick={() => removeQuestion(ci, qi)}>✕</button>
                         )}
+                      </div>
+                      <div className={styles.questionAnswersRow}>
+                        <input
+                          className={styles.answerCorrect}
+                          placeholder="✓ Correct answer"
+                          value={q.answer}
+                          onChange={(e) => updateQuestion(ci, qi, 'answer', e.target.value)}
+                        />
+                        {q.options.map((opt, oi) => (
+                          <input
+                            key={oi}
+                            className={styles.answerWrong}
+                            placeholder={`✗ Wrong ${oi + 1}`}
+                            value={opt}
+                            onChange={(e) => updateOption(ci, qi, oi, e.target.value)}
+                          />
+                        ))}
                       </div>
                     </div>
                   ))}

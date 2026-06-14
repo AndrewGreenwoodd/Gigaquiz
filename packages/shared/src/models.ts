@@ -21,6 +21,7 @@ export interface Question {
   id: string;
   text: string;
   answer: string;
+  options: string[];
   points: number;
   imageUrl?: string;
   order: number;

@@ -1,4 +1,4 @@
-import { useEffect, useRef, useState } from 'react';
+import { useEffect, useMemo, useRef, useState } from 'react';
 import { useNavigate } from 'react-router-dom';
 import { useGame } from '../../context/GameContext';
 import styles from './Game.module.css';
@@ -59,6 +59,20 @@ export default function Game() {
   const numRows = gameState.board[0]?.length ?? 0;
 
   const showQuestion = ['question-active', 'buzzer-open', 'awaiting-verification'].includes(gameState.phase);
+
+  const shuffledOptions = useMemo(() => {
+    const q = gameState.currentQuestion;
+    if (!q) return [];
+    const all = [q.answer, ...q.options.filter(Boolean)];
+    if (all.length < 2) return [];
+    const arr = [...all];
+    for (let i = arr.length - 1; i > 0; i--) {
+      const j = Math.floor(Math.random() * (i + 1));
+      [arr[i], arr[j]] = [arr[j], arr[i]];
+    }
+    return arr;
+  // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [gameState.currentQuestion?.id]);
   const canBuzz = gameState.phase === 'buzzer-open' && !isHost && me && !me.hasAnsweredCurrentQuestion;
   const showHostPanel = isHost && gameState.phase === 'awaiting-verification' && gameState.buzzedPlayerId;
 
@@ -141,6 +155,13 @@ export default function Game() {
             <p className={styles.questionText}>{gameState.currentQuestion.text}</p>
             {gameState.currentQuestion.imageUrl && (
               <img src={gameState.currentQuestion.imageUrl} className={styles.questionImage} alt="" />
+            )}
+            {shuffledOptions.length > 0 && (
+              <div className={styles.optionsGrid}>
+                {shuffledOptions.map((opt, i) => (
+                  <div key={i} className={styles.optionChip}>{opt}</div>
+                ))}
+              </div>
             )}
           </div>
 

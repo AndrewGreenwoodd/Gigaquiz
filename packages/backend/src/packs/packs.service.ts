@@ -48,6 +48,7 @@ export class PacksService {
               create: cat.questions.map((q) => ({
                 text: q.text,
                 answer: q.answer,
+                options: q.options ?? [],
                 points: q.points,
                 imageUrl: q.imageUrl,
                 order: q.order,
@@ -87,6 +88,7 @@ export class PacksService {
                 create: cat.questions.map((q) => ({
                   text: q.text,
                   answer: q.answer,
+                  options: q.options ?? [],
                   points: q.points,
                   imageUrl: q.imageUrl,
                   order: q.order,
