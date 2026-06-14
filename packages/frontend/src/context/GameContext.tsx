@@ -1,4 +1,4 @@
-import { createContext, useContext, useEffect, useRef, useState, useCallback } from 'react';
+import { createContext, useContext, useEffect, useMemo, useState, useCallback } from 'react';
 import type { ReactNode } from 'react';
 import { useNavigate } from 'react-router-dom';
 import type { GameState } from '@gigaquiz/shared';
@@ -23,7 +23,7 @@ interface GameContextValue {
 const GameContext = createContext<GameContextValue | null>(null);
 
 export function GameProvider({ children }: { children: ReactNode }) {
-  const socket = useRef(getSocket()).current;
+  const socket = useMemo(() => getSocket(), []);
   const [gameState, setGameState] = useState<GameState | null>(null);
   const [roomCode, setRoomCode] = useState<string | null>(() => sessionStorage.getItem(S_ROOM));
   const [isHost, setIsHost] = useState(() => sessionStorage.getItem(S_HOST) === 'true');
@@ -83,6 +83,7 @@ export function GameProvider({ children }: { children: ReactNode }) {
   );
 }
 
+// eslint-disable-next-line react-refresh/only-export-components
 export function useGame() {
   const ctx = useContext(GameContext);
   if (!ctx) throw new Error('useGame must be used within GameProvider');
