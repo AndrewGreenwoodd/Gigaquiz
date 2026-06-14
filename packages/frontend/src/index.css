@@ -1,0 +1,38 @@
+*, *::before, *::after {
+  box-sizing: border-box;
+  margin: 0;
+  padding: 0;
+}
+
+:root {
+  --bg: #06050f;
+  --surface: #120e2e;
+  --surface2: #1c1647;
+  --border: #2d2460;
+  --accent: #4a90e2;
+  --accent2: #e2c84a;
+  --text: #e8e6f0;
+  --text-muted: #8882aa;
+  --danger: #e24a4a;
+  --success: #4ae27e;
+  font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+  color: var(--text);
+  background: var(--bg);
+}
+
+body {
+  min-height: 100vh;
+}
+
+#root {
+  min-height: 100vh;
+}
+
+button {
+  cursor: pointer;
+  font-family: inherit;
+}
+
+input, textarea, select {
+  font-family: inherit;
+}

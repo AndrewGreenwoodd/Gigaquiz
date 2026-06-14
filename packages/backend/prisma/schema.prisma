@@ -1,0 +1,38 @@
+generator client {
+  provider = "prisma-client-js"
+}
+
+datasource db {
+  provider = "postgresql"
+}
+
+model QuestionPack {
+  id            String     @id @default(cuid())
+  name          String
+  description   String?
+  authorName    String
+  isPublic      Boolean    @default(true)
+  timerDuration Int        @default(5)
+  categories    Category[]
+  createdAt     DateTime   @default(now())
+}
+
+model Category {
+  id        String       @id @default(cuid())
+  name      String
+  order     Int
+  pack      QuestionPack @relation(fields: [packId], references: [id], onDelete: Cascade)
+  packId    String
+  questions Question[]
+}
+
+model Question {
+  id         String   @id @default(cuid())
+  text       String
+  answer     String
+  points     Int
+  imageUrl   String?
+  order      Int
+  category   Category @relation(fields: [categoryId], references: [id], onDelete: Cascade)
+  categoryId String
+}

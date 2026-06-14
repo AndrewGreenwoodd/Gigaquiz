@@ -1,0 +1,223 @@
+.page {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  min-height: 100vh;
+  padding: 32px 24px;
+  gap: 24px;
+}
+
+.header {
+  display: flex;
+  align-items: center;
+  gap: 16px;
+  width: 100%;
+  max-width: 900px;
+}
+
+.backBtn {
+  background: none;
+  border: none;
+  color: var(--text-muted);
+  font-size: 14px;
+  padding: 4px 0;
+}
+
+.backBtn:hover { color: var(--text); }
+
+.title { font-size: 28px; font-weight: 700; color: var(--accent2); }
+
+.form {
+  width: 100%;
+  max-width: 900px;
+  display: flex;
+  flex-direction: column;
+  gap: 24px;
+}
+
+.fieldGroup {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 12px;
+}
+
+.fieldGroupFull {
+  composes: fieldGroup;
+  grid-template-columns: 1fr;
+}
+
+.label {
+  display: flex;
+  flex-direction: column;
+  gap: 6px;
+  font-size: 13px;
+  color: var(--text-muted);
+  text-transform: uppercase;
+  letter-spacing: 0.5px;
+}
+
+.input {
+  padding: 10px 14px;
+  background: var(--surface);
+  border: 2px solid var(--border);
+  border-radius: 8px;
+  color: var(--text);
+  font-size: 15px;
+}
+
+.input:focus {
+  outline: none;
+  border-color: var(--accent);
+}
+
+.sectionTitle {
+  font-size: 14px;
+  font-weight: 600;
+  text-transform: uppercase;
+  letter-spacing: 1px;
+  color: var(--text-muted);
+  margin-bottom: 4px;
+}
+
+.categories {
+  display: flex;
+  flex-direction: column;
+  gap: 16px;
+}
+
+.categoryCard {
+  background: var(--surface);
+  border: 1px solid var(--border);
+  border-radius: 10px;
+  padding: 16px;
+  display: flex;
+  flex-direction: column;
+  gap: 12px;
+}
+
+.categoryHeader {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+}
+
+.categoryNameInput {
+  composes: input;
+  flex: 1;
+  font-weight: 700;
+}
+
+.removeBtn {
+  background: none;
+  border: 1px solid var(--border);
+  border-radius: 6px;
+  color: var(--danger);
+  padding: 6px 10px;
+  font-size: 13px;
+}
+
+.removeBtn:hover { border-color: var(--danger); background: rgba(226,74,74,0.08); }
+
+.questions {
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+}
+
+.questionRow {
+  display: grid;
+  grid-template-columns: 1fr 1fr 80px auto;
+  gap: 8px;
+  align-items: center;
+}
+
+.questionTextInput { composes: input; }
+.questionAnswerInput { composes: input; }
+
+.pointsInput {
+  composes: input;
+  text-align: center;
+}
+
+.imageUpload {
+  display: flex;
+  flex-direction: column;
+  gap: 4px;
+  align-items: center;
+}
+
+.imageBtn {
+  padding: 6px 10px;
+  background: var(--surface2);
+  border: 1px solid var(--border);
+  border-radius: 6px;
+  color: var(--text-muted);
+  font-size: 12px;
+  cursor: pointer;
+}
+
+.imageBtn:hover { border-color: var(--accent); color: var(--accent); }
+
+.imagePreview {
+  max-width: 60px;
+  max-height: 40px;
+  border-radius: 4px;
+  object-fit: cover;
+}
+
+.addQuestionBtn {
+  align-self: flex-start;
+  padding: 6px 14px;
+  background: none;
+  border: 1px dashed var(--border);
+  border-radius: 6px;
+  color: var(--text-muted);
+  font-size: 13px;
+}
+
+.addQuestionBtn:hover { border-color: var(--accent); color: var(--accent); }
+
+.addCategoryBtn {
+  padding: 12px;
+  background: none;
+  border: 2px dashed var(--border);
+  border-radius: 10px;
+  color: var(--text-muted);
+  font-size: 14px;
+  text-align: center;
+}
+
+.addCategoryBtn:hover { border-color: var(--accent); color: var(--accent); }
+
+.actions {
+  display: flex;
+  gap: 12px;
+  justify-content: flex-end;
+}
+
+.saveBtn {
+  padding: 12px 28px;
+  background: var(--accent2);
+  border: none;
+  border-radius: 8px;
+  color: #000;
+  font-size: 15px;
+  font-weight: 700;
+}
+
+.saveBtn:hover { background: #f0d55a; }
+.saveBtn:disabled { opacity: 0.5; cursor: not-allowed; }
+
+.error { color: var(--danger); font-size: 14px; }
+.success { color: var(--success); font-size: 14px; }
+
+.toggle {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  cursor: pointer;
+  font-size: 14px;
+  color: var(--text-muted);
+}
+
+.toggle input { cursor: pointer; width: 16px; height: 16px; }

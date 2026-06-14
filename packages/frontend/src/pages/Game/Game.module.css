@@ -1,0 +1,349 @@
+.page {
+  display: flex;
+  min-height: 100vh;
+  flex-direction: column;
+}
+
+.topBar {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: 12px 20px;
+  background: var(--surface);
+  border-bottom: 1px solid var(--border);
+}
+
+.topBarTitle {
+  font-size: 18px;
+  font-weight: 700;
+  color: var(--accent2);
+}
+
+.topBarCode {
+  font-size: 13px;
+  color: var(--text-muted);
+  font-family: monospace;
+  letter-spacing: 2px;
+}
+
+.main {
+  display: flex;
+  flex: 1;
+  gap: 0;
+}
+
+/* Scoreboard sidebar */
+.sidebar {
+  width: 220px;
+  flex-shrink: 0;
+  background: var(--surface);
+  border-right: 1px solid var(--border);
+  padding: 16px 12px;
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+}
+
+.sidebarTitle {
+  font-size: 11px;
+  font-weight: 600;
+  text-transform: uppercase;
+  letter-spacing: 1px;
+  color: var(--text-muted);
+  margin-bottom: 4px;
+}
+
+.player {
+  background: var(--surface2);
+  border: 1px solid var(--border);
+  border-radius: 6px;
+  padding: 8px 10px;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  font-size: 14px;
+}
+
+.playerActive {
+  composes: player;
+  border-color: var(--accent2);
+}
+
+.playerName {
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+  max-width: 120px;
+}
+
+.playerScore {
+  font-weight: 700;
+  color: var(--accent2);
+}
+
+/* Board */
+.boardArea {
+  flex: 1;
+  padding: 20px;
+  overflow-x: auto;
+}
+
+.board {
+  display: grid;
+  gap: 8px;
+  width: 100%;
+}
+
+.categoryHeader {
+  background: var(--surface2);
+  border: 1px solid var(--border);
+  border-radius: 6px;
+  padding: 12px 8px;
+  font-size: 14px;
+  font-weight: 700;
+  text-align: center;
+  text-transform: uppercase;
+  letter-spacing: 0.5px;
+  color: var(--accent);
+}
+
+.cell {
+  background: var(--surface);
+  border: 2px solid var(--border);
+  border-radius: 6px;
+  padding: 16px 8px;
+  font-size: 22px;
+  font-weight: 900;
+  color: var(--accent2);
+  text-align: center;
+  transition: background 0.15s, border-color 0.15s, transform 0.1s;
+  min-height: 70px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.cellClickable {
+  composes: cell;
+  cursor: pointer;
+}
+
+.cellClickable:hover {
+  background: var(--surface2);
+  border-color: var(--accent2);
+  transform: scale(1.03);
+}
+
+.cellAnswered {
+  composes: cell;
+  opacity: 0.2;
+  cursor: default;
+}
+
+.phaseMsg {
+  text-align: center;
+  color: var(--text-muted);
+  font-size: 15px;
+  margin-top: 24px;
+}
+
+/* Question modal */
+.overlay {
+  position: fixed;
+  inset: 0;
+  background: rgba(0,0,0,0.85);
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  gap: 24px;
+  padding: 24px;
+  z-index: 100;
+}
+
+.questionCard {
+  background: var(--surface);
+  border: 2px solid var(--border);
+  border-radius: 12px;
+  padding: 40px;
+  max-width: 700px;
+  width: 100%;
+  text-align: center;
+  display: flex;
+  flex-direction: column;
+  gap: 16px;
+}
+
+.questionPoints {
+  font-size: 32px;
+  font-weight: 900;
+  color: var(--accent2);
+}
+
+.questionText {
+  font-size: 26px;
+  font-weight: 600;
+  line-height: 1.4;
+}
+
+.questionImage {
+  max-height: 280px;
+  max-width: 100%;
+  border-radius: 8px;
+  object-fit: contain;
+}
+
+/* Timer bar */
+.timerBar {
+  width: 100%;
+  max-width: 700px;
+  height: 8px;
+  background: var(--surface2);
+  border-radius: 4px;
+  overflow: hidden;
+}
+
+.timerFill {
+  height: 100%;
+  background: var(--accent2);
+  border-radius: 4px;
+  transition: width linear;
+}
+
+.timerFillLow {
+  composes: timerFill;
+  background: var(--danger);
+}
+
+/* Buzz button */
+.buzzBtn {
+  padding: 24px 64px;
+  font-size: 24px;
+  font-weight: 900;
+  background: var(--danger);
+  border: none;
+  border-radius: 50px;
+  color: #fff;
+  letter-spacing: 2px;
+  transition: transform 0.1s, background 0.15s;
+}
+
+.buzzBtn:hover { background: #f05a5a; transform: scale(1.05); }
+.buzzBtn:active { transform: scale(0.97); }
+.buzzBtn:disabled { opacity: 0.35; cursor: not-allowed; transform: none; }
+
+.buzzedMsg {
+  font-size: 22px;
+  font-weight: 700;
+  color: var(--accent2);
+  text-align: center;
+}
+
+/* Host panel */
+.hostPanel {
+  background: var(--surface2);
+  border: 2px solid var(--accent);
+  border-radius: 12px;
+  padding: 20px 32px;
+  text-align: center;
+  display: flex;
+  flex-direction: column;
+  gap: 12px;
+  max-width: 500px;
+  width: 100%;
+}
+
+.hostPanelLabel {
+  font-size: 12px;
+  text-transform: uppercase;
+  letter-spacing: 1px;
+  color: var(--text-muted);
+}
+
+.correctAnswer {
+  font-size: 20px;
+  font-weight: 700;
+  color: var(--success);
+}
+
+.hostBtns {
+  display: flex;
+  gap: 12px;
+  justify-content: center;
+}
+
+.correctBtn {
+  padding: 12px 28px;
+  background: var(--success);
+  border: none;
+  border-radius: 8px;
+  color: #000;
+  font-size: 16px;
+  font-weight: 700;
+}
+.correctBtn:hover { background: #5af590; }
+
+.wrongBtn {
+  padding: 12px 28px;
+  background: var(--danger);
+  border: none;
+  border-radius: 8px;
+  color: #fff;
+  font-size: 16px;
+  font-weight: 700;
+}
+.wrongBtn:hover { background: #f05a5a; }
+
+/* Game over */
+.gameOver {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  min-height: 100vh;
+  gap: 20px;
+  padding: 32px;
+  text-align: center;
+}
+
+.winnerTitle {
+  font-size: 42px;
+  font-weight: 900;
+  color: var(--accent2);
+}
+
+.winnerName {
+  font-size: 64px;
+  font-weight: 900;
+  color: var(--text);
+}
+
+.finalScores {
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+  width: 100%;
+  max-width: 360px;
+}
+
+.finalRow {
+  background: var(--surface);
+  border: 1px solid var(--border);
+  border-radius: 8px;
+  padding: 12px 16px;
+  display: flex;
+  justify-content: space-between;
+}
+
+.homeBtn {
+  padding: 14px 32px;
+  background: var(--accent);
+  border: none;
+  border-radius: 8px;
+  color: #fff;
+  font-size: 16px;
+  font-weight: 700;
+  margin-top: 8px;
+}
+
+.homeBtn:hover { background: #5a9ff5; }
