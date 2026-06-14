@@ -1,4 +1,5 @@
-import { createContext, useContext, useEffect, useRef, useState, useCallback, ReactNode } from 'react';
+import { createContext, useContext, useEffect, useRef, useState, useCallback } from 'react';
+import type { ReactNode } from 'react';
 import { useNavigate } from 'react-router-dom';
 import type { GameState } from '@gigaquiz/shared';
 import { getSocket } from '../lib/socket';
